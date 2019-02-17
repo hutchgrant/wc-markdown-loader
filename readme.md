@@ -15,7 +15,7 @@ This loader is a modified fork from [javiercf/react-markdown-loader](https://git
 ## Usage
 
 In the FrontMatter you should import the components you want to render
-with the component name as a key and it's path as the value.  Use the label key to indicate the unique name you want to register the markdown files as which you can then load in your app as `<wc-markdown-hello />` for example.
+with the component name as a key and it's path as the value.  Use the label key to indicate the unique name you want to register the markdown files as which you can then load in your app as `<wc-md-hello />` for example.
 
 ```markdown
 ---
@@ -73,15 +73,15 @@ imports:
 This is an example component rendered from markdown
 
 ```render
-<hello-world label="world"></hello-world>
+&lt;hello-world label="world"&gt;&lt;/hello-world&gt;
 ```
 
 This is an example code block rendered with syntax highlighter
 
 ```render html
-<!-- This will only render in prism syntax highlighter -->
-<!-- You can override this style, see ./demo/hello-world.md -->
-<hello-world label="world"></hello-world>
+&lt;!-- This will only render in prism syntax highlighter -->
+&lt;!-- You can override this style, see ./demo/hello-world.md --&gt;
+&lt;hello-world label="world"&gt;&lt;/hello-world&gt;
 ```
 
 </pre>
