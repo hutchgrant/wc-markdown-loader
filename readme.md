@@ -19,7 +19,7 @@ npm i --save-dev wc-markdown-loader
 npm i prismjs
 ```
 
-Prism is required within your application for syntax highlighting. See [babel prismjs instructions](https://github.com/mAAdhaTTah/babel-plugin-prismjs) for bundle optimization.  By default, we're using the twilight theme. You can override that as well.
+Prism is required within your application for syntax highlighting. By default, we're using the twilight theme. You can override that as well.
 
 ## Usage
 
@@ -102,14 +102,12 @@ The component you want to render your new markdown webcomponent
 ```js
 import { html, LitElement } from 'lit-element';
 import './hello-world.md';
-import './goodbye-world.md';
 
 class AppComponent extends LitElement {
 
   render() {
     return html`
       <wc-md-hello></wc-md-hello>
-      <wc-md-goodbye></wc-md-goodbye>
     `;
   }
 }
