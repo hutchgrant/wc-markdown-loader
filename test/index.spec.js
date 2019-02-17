@@ -6,7 +6,7 @@ const loader = require('../src/index.js');
 
 describe('React Markdown Loader', () => {
   let mdExample = '';
-  const mdFile = path.join(__dirname, './examples/hello-world.md');
+  const mdFile = path.join(__dirname, '../demo/src/hello-world.md');
 
   beforeAll((done) => {
     fs.readFile(mdFile, 'utf8', (err, data) => {

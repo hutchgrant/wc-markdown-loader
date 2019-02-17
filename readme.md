@@ -2,8 +2,8 @@ Web Component Markdown Loader
 ==================
 
 [![npm version](https://img.shields.io/npm/v/wc-markdown-loader.svg)](https://www.npmjs.com/package/wc-markdown-loader)
-[![build status](https://travis-ci.org/hutchgrant/wc-markdown-loader.svg?branch=master)](https://travis-ci.org/javiercf/wc-markdown-loader)
-[![dependencies Status](https://david-dm.org/hutchgrant/wc-markdown-loader/status.svg)](https://david-dm.org/javiercf/wc-markdown-loader)
+[![build status](https://travis-ci.com/hutchgrant/wc-markdown-loader.svg?branch=master)](https://travis-ci.com/hutchgrant/wc-markdown-loader)
+[![dependencies Status](https://david-dm.org/hutchgrant/wc-markdown-loader/status.svg)](https://david-dm.org/hutchgrant/wc-markdown-loader)
 [![devDependencies Status](https://david-dm.org/hutchgrant/wc-markdown-loader/dev-status.svg)](https://david-dm.org/hutchgrant/wc-markdown-loader?type=dev)
 
 Webpack loader that parses markdown files and converts them to Web Components.
