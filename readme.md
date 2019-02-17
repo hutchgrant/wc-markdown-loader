@@ -10,7 +10,16 @@ Webpack loader that parses markdown files and converts them to Web Components.
 It will also parse FrontMatter to import dependencies and render components
 along with it’s source code.
 
-This loader is a modified fork from [javiercf/react-markdown-loader](https://github.com/javiercf/react-markdown-loader) and can easily be used in conjunction with [Create-Evergreen-App](https://github.com/ProjectEvergreen/create-evergreen-app)
+This loader is a modified fork from [javiercf/react-markdown-loader](https://github.com/javiercf/react-markdown-loader) and can easily be used in conjunction with [Create-Evergreen-App](https://github.com/ProjectEvergreen/create-evergreen-app). It's still in the early stages and contributions are welcome.
+
+## Install
+
+```bash
+npm i --save-dev wc-markdown-loader
+npm i prismjs
+```
+
+Prism is required within your application for syntax highlighting. See [babel prismjs instructions](https://github.com/mAAdhaTTah/babel-plugin-prismjs) for bundle optimization.  By default, we're using the twilight theme. You can override that as well.
 
 ## Usage
 
