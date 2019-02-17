@@ -7,8 +7,9 @@ class ButtonComponent extends LitElement {
       label: String
     };
   }
+
   render() {
-    return html `<button>${this.label}</button>`;
+    return html`<button>${this.label}</button>`;
   }
 }
 

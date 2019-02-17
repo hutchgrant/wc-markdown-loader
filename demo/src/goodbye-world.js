@@ -7,8 +7,9 @@ class GoodbyeWorld extends LitElement {
       label: String
     };
   }
+
   render() {
-    return html `<div>Goodbye ${this.label}</div>`;
+    return html`<div>Goodbye ${this.label}</div>`;
   }
 }
 

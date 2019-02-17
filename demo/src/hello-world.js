@@ -7,8 +7,9 @@ class HelloWorld extends LitElement {
       label: String
     };
   }
+
   render() {
-    return html `
+    return html`
     <div>Hello ${this.label}</div>`;
   }
 }
