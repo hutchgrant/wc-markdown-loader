@@ -1,9 +1,10 @@
 {
   "name": "wc-markdown-loader",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "Webpack loader to render Web Components from markdown",
   "keywords": [
     "Web Components",
+    "LitElement",
     "lit-element",
     "webpack",
     "loader",
