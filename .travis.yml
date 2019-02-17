@@ -1,5 +1,12 @@
 language: node_js
 node_js:
   - "10.8.0"
+install:
+  - npm i
+  - npm i --prefix demo
 script: 'npm run travis'
+cache:
+  directories:
+    - node_modules
+    - demo/node_modules
 sudo: false
