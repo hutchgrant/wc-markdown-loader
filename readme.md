@@ -31,7 +31,7 @@ with the component name as a key and it's path as the value.  Use the label key 
 label: 'hello'
 imports:
   Button: './button.js'
-  GoodbyeWorld: './hello-world.js'
+  HelloWorld: './hello-world.js'
 ```
 
 *webpack.config.js*
