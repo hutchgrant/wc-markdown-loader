@@ -16,7 +16,7 @@ const except = require('except');
  * @param   {HTMLObject} markdown - HTML and imports
  * @returns {String}              - React Component
  */
-module.exports = function build(markdown) {
+module.exports = function build(markdown, label) {
   let doImports = 'import { LitElement, html } from \'lit-element\';\nimport css from \'prismjs/themes/prism-twilight.css\';\n';
   const imports = markdown.attributes.imports || {};
   const js = markdown.html;
@@ -47,6 +47,6 @@ class Component extends LitElement {
       \`;
   }
 };
-customElements.define('wc-md-${markdown.attributes.label}', Component);
+customElements.define('wc-md-${markdown.attributes.label || label}', Component);
 `;
 };

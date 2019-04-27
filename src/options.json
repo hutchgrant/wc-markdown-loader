@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "properties": {
+    "graph": {
+      "type": [ "array" ]
+    }
+  },
+  "errorMessage": {
+    "test": "should be {array})"
+  },
+  "additionalProperties": false
+}
