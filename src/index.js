@@ -17,14 +17,11 @@ module.exports = async function loader(content) {
 
   validateOptions(schema, options, 'wc-markdown-loader');
 
-  try {
-    if (Object.keys(options).length > 0 && options.graph.length > 0) {
-      elementLabel = await parser.parseElementLabel(options.graph, this.resourcePath);
-    }
-    const markdown = await parser.parse(content);
-    const component = build(markdown, elementLabel);
-    return callback(null, component);
-  } catch (err) {
-    return callback(err);
+  if (Object.keys(options).length > 0 && options.graph.length > 0) {
+    elementLabel = options.graph.filter(page => page.filePath === this.resourcePath)[0].label;
   }
+  parser.parse(content)
+    .then(markdown => build(markdown, elementLabel))
+    .then(component => callback(null, component))
+    .catch(callback);
 };

@@ -8,27 +8,6 @@ const { escapeHtml } = require('remarkable/lib/common/utils');
 const md = new Remarkable();
 
 /**
- * Parse element label from option graph object
- * @param   {Array} graph     array of all md filePaths and generated labels
- * @param   {String} filePath  resourcePath of current evaluated file
- * @returns {String}           element label
- */
-function parseElementLabel(graph, filePath) {
-  return new Promise((resolve, reject) => {
-    try {
-      const currentPageGraph = graph.filter(page => page.filePath === filePath)[0];
-      if (Object.keys(currentPageGraph).length > 0) {
-        resolve(currentPageGraph.label);
-      } else {
-        throw new Error('Cannot locate md element label in wc-markdown-loader graph');
-      }
-    } catch (err) {
-      reject(err);
-    }
-  });
-}
-
-/**
  * Wraps the code and jsx in an html component
  * for styling it later
  * @param   {string} exampleRun Code to be run in the styleguide
@@ -151,6 +130,5 @@ module.exports = {
   parse,
   parseCodeBlock,
   parseFrontMatter,
-  parseMarkdown,
-  parseElementLabel
+  parseMarkdown
 };
