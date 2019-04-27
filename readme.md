@@ -152,6 +152,10 @@ module: {
 
 Note: this is overridden if a .md file contains the label variable, at the top, in front-matter.
 
+**All compiled md component labels are automatically prefixed with `wc-md-`  for example: `<wc-md-hello-world></wc-md-hello-world>`**
+
+This advanced usage is useful for example if you need to know the element name for a [lit-redux-route](https://github.com/fernandopasik/lit-redux-router) and don't want to pre-label every single md file.
+
 ## Contributing
 
 Pull requests and stars are always welcome. For bugs and feature requests, [please create an issue](../../issues/new).
