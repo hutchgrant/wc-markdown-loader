@@ -2,11 +2,11 @@
   "type": "object",
   "properties": {
     "graph": {
-      "type": [ "array" ]
+      "type": [ "string" ]
     }
   },
   "errorMessage": {
-    "test": "should be {array})"
+    "test": "should be {string})"
   },
   "additionalProperties": false
 }

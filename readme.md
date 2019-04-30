@@ -117,19 +117,19 @@ customElements.define('eve-app', AppComponent);
 
 ## Advanced Options
 
-If you want to pre-scaffold an application with a graph of all md files paths and add your own generated labels(removing the need to cite label in each of the file's front-matter), you can create a graph object then add it to to the options of the loader e.g.
+If you want to pre-scaffold an application with a graph of all md files paths and add your own generated labels(removing the need to cite label in each of the file's front-matter), you can create a graph array, write the serialized json to a cache file, then add the path of that .json file to the options of the loader e.g.
 
-graph object:
+graph.json file:
 
 ```js
-const graph = [
+[
   {
-    filePath: '/home/user/workspace/app/src/pages/mypage.md'
-    label: 'some-generated-label-asjhfkawa'
+    "filePath": "/home/user/workspace/app/src/pages/mypage.md"
+    "label": "some-generated-label-asjhfkawa"
   },
   {
-    filePath: '/home/user/workspace/app/src/pages/myotherpage.md'
-    label: 'some-generated-label-jkhkdsfskwad'
+    "filePath": "/home/user/workspace/app/src/pages/myotherpage.md"
+    "label": "some-generated-label-jkhkdsfskwad"
   }
 ]
 ```
@@ -143,7 +143,7 @@ module: {
       test: /\.md$/,
       loader: 'wc-markdown-loader',
       options: {
-        graph
+        graph: path.join(__dirname, 'graph.json')
       }
     }
   ]
