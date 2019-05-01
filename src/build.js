@@ -11,7 +11,7 @@ const except = require('except');
  */
 
 /**
- * Builds the React Component from markdown content
+ * Builds the LitElement Web Component from markdown content
  * with its dependencies
  * @param   {HTMLObject} markdown - HTML and imports
  * @returns {String}              - React Component
