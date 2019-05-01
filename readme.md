@@ -152,6 +152,8 @@ module: {
 
 Note: this is overridden if a .md file contains the label variable, at the top, in front-matter.
 
+Markdown pages that do not contain a `label` front-matter variable, and without any graph added to loader options, will be defined using the last 15 characters of a sha256 hash of the file's resource path, as well as prepended with wc-md-. e.g. `<wc-md-4e53214c7f8108e></wc-md-4e53214c7f8108e>`.
+
 **All compiled md component labels are automatically prefixed with `wc-md-`  for example: `<wc-md-hello-world></wc-md-hello-world>`**
 
 This advanced usage is useful for example if you need to know the element name for a [lit-redux-route](https://github.com/fernandopasik/lit-redux-router) and don't want to pre-label every single md file.
