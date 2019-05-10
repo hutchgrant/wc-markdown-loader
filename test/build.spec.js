@@ -15,10 +15,17 @@ describe('Build Component', () => {
         return done(err);
       }
 
+      const defaults = {
+        label: 'testing',
+        defaultDOM: true,
+        defaultStyle: true,
+        customStyle: ''
+      };
+
       parser
         .parse(data)
         .then((html) => {
-          component = build(html);
+          component = build(html, defaults);
           done();
         })
         .catch(done);

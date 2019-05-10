@@ -3,10 +3,16 @@
   "properties": {
     "graph": {
       "type": [ "string" ]
+    },
+    "defaultStyle": {
+      "type": [ "boolean" ]
+    },
+    "customStyle": {
+      "type": [ "string" ]
+    },
+    "shadowRoot": {
+      "type": [ "boolean" ]
     }
-  },
-  "errorMessage": {
-    "test": "should be {string})"
   },
   "additionalProperties": false
 }

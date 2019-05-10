@@ -16,10 +16,32 @@ const except = require('except');
  * @param   {HTMLObject} markdown - HTML and imports
  * @returns {String}              - React Component
  */
-module.exports = function build(markdown, label) {
-  let doImports = 'import { LitElement, html } from \'lit-element\';\nimport css from \'prismjs/themes/prism-twilight.css\';\n';
+
+module.exports = function build(markdown, defaults) {
+  const { defaultDOM, defaultStyle, customStyle, label } = defaults;
   const imports = markdown.attributes.imports || {};
   const js = markdown.html;
+
+  let doImports = 'import { LitElement, html } from \'lit-element\';\n';
+  const lightDOM = `
+  createRenderRoot() {
+    return this;
+  }`;
+
+  if (customStyle) {
+    doImports += `import custom from '${customStyle}';\n`;
+  }
+
+  if (defaultStyle) {
+    doImports += 'import css from \'prismjs/themes/prism-twilight.css\';\n';
+  }
+
+  const style = `
+  <style>
+  ${defaultStyle ? '${css}' : ''}
+  ${customStyle ? '${custom}' : ''}
+  </style>
+  `;
 
   const frontMatterAttributes = except(markdown.attributes, 'imports');
 
@@ -38,14 +60,13 @@ export const attributes = ${JSON.stringify(camelize(frontMatterAttributes))};
 class Component extends LitElement {
   render(){
     return html \`
-    <style>
-    \${css}
-    </style>
+      ${style}
       <div>
         ${js}
       </div>
       \`;
   }
+  ${defaultDOM === false ? lightDOM : ''}
 };
 customElements.define('wc-md-${markdown.attributes.label || label}', Component);
 `;

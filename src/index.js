@@ -22,12 +22,13 @@ module.exports = async function loader(content) {
   let elementLabel = '';
 
   validateOptions(schema, options, 'wc-markdown-loader');
+  const { graph, shadowRoot, defaultStyle, customStyle } = options;
 
-  if (Object.keys(options).length > 0 && options.graph) {
+  if (Object.keys(options).length > 0 && graph) {
     // use preset graph
-    const graph = JSON.parse(fs.readFileSync(options.graph, 'utf8'));
+    const presetGraph = JSON.parse(fs.readFileSync(graph, 'utf8'));
 
-    elementLabel = graph.filter(page => page.filePath === this.resourcePath)[0].label;
+    elementLabel = presetGraph.filter(page => page.filePath === this.resourcePath)[0].label;
   } else {
     // auto hash label
     const hash = crypto.createHash(labelHash.algo);
@@ -37,8 +38,17 @@ module.exports = async function loader(content) {
     const labelLength = elementLabel.length;
     elementLabel = elementLabel.substring(labelLength - labelHash.trim, labelLength);
   }
+
+
+  const defaults = {
+    label: elementLabel,
+    defaultDOM: shadowRoot,
+    defaultStyle,
+    customStyle
+  };
+
   parser.parse(content)
-    .then(markdown => build(markdown, elementLabel))
+    .then(markdown => build(markdown, defaults))
     .then(component => callback(null, component))
     .catch(callback);
 };

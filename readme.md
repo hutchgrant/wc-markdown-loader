@@ -117,6 +117,51 @@ customElements.define('eve-app', AppComponent);
 
 ## Advanced Options
 
+### LightDOM
+
+If you want to disable shadowRoot and instead heave your markdown component render in the root node, you can add the following to your webpack config.
+
+*webpack.config.js*
+```js
+module: {
+  rules: [
+    {
+      test: /\.md$/,
+      loader: 'wc-markdown-loader',
+      options: {
+        shadowRoot: false
+      }
+    }
+  ]
+}
+```
+
+This is if you need to manipulate this component from a parent component etc.
+
+### Custom Style
+
+If you want to set a global custom style to use for your markdown components, you can do so from your webpack config. Keep in mind that this is relative to the working directory. You may need to use a `path.join(__dirname, 'mypath/mypath.css')`.  The example below demonstrates a prism theme from `node_modules/prismjs/themes/`.
+
+*webpack.config.js*
+```js
+module: {
+  rules: [
+    {
+      test: /\.md$/,
+      loader: 'wc-markdown-loader',
+      options: {
+        defaultStyle: false,
+        customStyle: 'prismjs/themes/prism-funky.css'
+      }
+    }
+  ]
+}
+```
+
+**note**: You can disable toggle the defaultStyle if you want, it will be overwritten by customStyle.
+
+### Graph
+
 If you want to pre-scaffold an application with a graph of all md files paths and add your own generated labels(removing the need to cite label in each of the file's front-matter), you can create a graph array, write the serialized json to a cache file, then add the path of that .json file to the options of the loader e.g.
 
 graph.json file:
