@@ -43,7 +43,7 @@ module.exports = async function loader(content) {
   const defaults = {
     label: elementLabel,
     defaultDOM: shadowRoot,
-    defaultStyle,
+    defaultStyle: defaultStyle || defaultStyle === undefined,
     customStyle
   };
 
