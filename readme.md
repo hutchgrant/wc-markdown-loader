@@ -158,7 +158,7 @@ module: {
 }
 ```
 
-**note**: You can disable toggle the defaultStyle if you want, it will be overwritten by customStyle.
+**note**: You can toggle the defaultStyle as well, it will have a lower specificity than the customStyle.
 
 ### Graph
 

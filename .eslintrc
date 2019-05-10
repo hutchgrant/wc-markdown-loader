@@ -10,6 +10,10 @@
     "strict": [ "error", "global" ],
     "consistent-return": "off",
     "jsx-a11y/href-no-hash": "off",
-    "comma-dangle": "off"
+    "comma-dangle": "off",
+    "curly": 2,
+    "object-curly-spacing": [2,"always",{}],
+    "no-template-curly-in-string": "off",
+    "object-curly-newline": "off"
   }
 }
