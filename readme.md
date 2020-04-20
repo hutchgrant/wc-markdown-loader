@@ -8,7 +8,7 @@ Web Component Markdown Loader
 
 Webpack loader that parses markdown files and converts them to Web Components.
 It will also parse FrontMatter to import dependencies and render components.
-Provides support for syntax highlighting via [highlight.js](https://highlightjs.org/)
+Provides support for syntax highlighting via [prismjs](https://prismjs.com/)
 
 This loader is a modified fork from [javiercf/react-markdown-loader](https://github.com/javiercf/react-markdown-loader) and can easily be used in conjunction with [Create-Evergreen-App](https://github.com/ProjectEvergreen/create-evergreen-app) and [Greenwood](https://github.com/ProjectEvergreen/greenwood). It's still in the early stages and contributions are welcome.
 
@@ -131,7 +131,7 @@ This is if you need to manipulate this component from a parent component etc.
 
 ### Custom Style
 
-If you want to set a global custom style to use for your markdown components, you can do so from your webpack config. Keep in mind that this is relative to the working directory. You may need to use a `path.join(__dirname, 'mypath/mypath.css')`.  The example below demonstrates a highlight.js theme from `node_modules/hightlight.js/styles/`.
+If you want to set a global custom style to use for your markdown components, you can do so from your webpack config. Keep in mind that this is relative to the working directory. You may need to use a `path.join(__dirname, 'mypath/mypath.css')`.  The example below demonstrates a prismjs theme from `node_modules/prismjs/themes/prism-tomorrow.css`.
 
 *webpack.config.js*
 ```js
@@ -142,7 +142,7 @@ module: {
       loader: 'wc-markdown-loader',
       options: {
         defaultStyle: false,
-        customStyle: 'highlight.js/styles/atom-one-dark.css'
+        customStyle: 'prismjs/themes/prism-tomorrow.css'
       }
     }
   ]
@@ -153,7 +153,7 @@ module: {
 
 ### Unified Presets
 
-You can utilize [unified presets](https://github.com/unifiedjs/unified#preset) via the **preset** option within the loader:
+You can utilize [unified presets](https://github.com/unifiedjs/unified#preset) via the **preset** option within the loader.  The presets are placed in the unified process array after remark is converted to rehype.
 
 *webpack.config.js*
 ```js
@@ -165,12 +165,10 @@ module: {
       options: {
         preset: {
           settings: {bullet: '*', emphasis: '*', fences: true},
-          plugins: [
-            require('remark-preset-lint-recommended'),
-            require('remark-preset-lint-consistent'),
-            require('remark-comment-config'),
-            [require('remark-toc'), {maxDepth: 3, tight: true}],
-            require('remark-license')
+            plugins: [
+              require('rehype-slug'),
+              require('rehype-autolink-headings')
+            ]
           ]
         }
       }
