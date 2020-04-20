@@ -40,7 +40,7 @@ describe('Parse Markdown', () => {
 
   it('parses markdown and created valid html for JSX', () => {
     parser.parse('![](myImage.png)').then((result) => {
-      expect(result.html).toEqual('<p><img src="myImage.png"></p>\n');
+      expect(result.html).toEqual('<p><img src="myImage.png"></p>');
     });
   });
 
@@ -69,6 +69,6 @@ describe('Syntax Highlighting', () => {
   it('example code blocks have run and source code', async () => {
     const result = await parser.parse(codeExample);
 
-    expect(result.html).toMatch('<pre><code class="hljs language-js">example</code></pre>');
+    expect(result.html).toMatch('<pre class="language-js"><code class="language-js">example\n</code></pre>');
   });
 });

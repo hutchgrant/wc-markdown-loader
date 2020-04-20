@@ -1,11 +1,13 @@
 'use strict';
 
 const frontMatter = require('front-matter');
-const unified = require('unified');
+const htmlRehype = require('rehype-stringify');
+const raw = require('rehype-raw');
+const rehypePrism = require('@mapbox/rehype-prism');
 const remarkParse = require('remark-parse');
-const htmlStringify = require('remark-html');
+const remark2rehype = require('remark-rehype');
 const report = require('vfile-reporter');
-const highlight = require('remark-highlight.js');
+const unified = require('unified');
 
 /**
  * Parse Markdown to HTML
@@ -20,9 +22,11 @@ function parseMarkdown(markdown, preset = {}) {
     try {
       const parser = unified()
         .use(remarkParse, settings)
-        .use(highlight)
+        .use(remark2rehype, { allowDangerousHtml: true })
+        .use(raw)
+        .use(rehypePrism)
         .use(preset)
-        .use(htmlStringify);
+        .use(htmlRehype);
 
       convertedHtml = String(await parser.process(markdown.body));
 

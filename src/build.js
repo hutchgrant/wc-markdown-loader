@@ -33,7 +33,7 @@ module.exports = function build(markdown, defaults) {
   }
 
   if (defaultStyle) {
-    doImports += 'import css from \'wc-markdown-loader/node_modules/highlight.js/styles/github.css\';\n';
+    doImports += 'import css from \'wc-markdown-loader/node_modules/prismjs/themes/prism-tomorrow.css\';\n';
   }
 
   const style = `
