@@ -12,6 +12,9 @@
     },
     "shadowRoot": {
       "type": [ "boolean" ]
+    },
+    "preset": {
+      "type": [ "object" ]
     }
   },
   "additionalProperties": false

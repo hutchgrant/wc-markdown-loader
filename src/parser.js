@@ -1,104 +1,39 @@
 'use strict';
 
 const frontMatter = require('front-matter');
-const Prism = require('node-prismjs');
-const Remarkable = require('remarkable');
-const { escapeHtml } = require('remarkable/lib/common/utils');
-
-const md = new Remarkable();
-
-/**
- * Wraps the code and jsx in an html component
- * for styling it later
- * @param   {string} exampleRun Code to be run in the styleguide
- * @param   {string} exampleSrc Source that will be shown as example
- * @param   {string} langClass  CSS class for the code block
- * @returns {string}            Code block with souce and run code
- */
-function codeBlockTemplate(exampleRun, exampleSrc, langClass) {
-  return `
-    <pre${!langClass ? '' : ` class="${langClass}"`}>
-<code${!langClass ? '' : ` class="${langClass}"`}>${exampleSrc}</code></pre>`;
-}
+const htmlRehype = require('rehype-stringify');
+const raw = require('rehype-raw');
+const rehypePrism = require('@mapbox/rehype-prism');
+const remarkParse = require('remark-parse');
+const remark2rehype = require('remark-rehype');
+const report = require('vfile-reporter');
+const unified = require('unified');
 
 /**
- * Parse a code block to have a source and a run code
- * @param   {String}   code       - Raw html code
- * @param   {String}   lang       - Language indicated in the code block
- * @param   {String}   langPrefix - Language prefix
- * @param   {Function} highlight  - Code highlight function
- * @returns {String}                Code block with souce and run code
- */
-function parseCodeBlock(code, lang, langPrefix, highlight) {
-  let codeBlock = escapeHtml(code);
-
-  if (highlight) {
-    codeBlock = highlight(code, lang);
-  }
-
-  const langClass = !lang ? '' : `${langPrefix}${escape(lang, true)}`;
-  const js = code;
-
-  codeBlock = codeBlock
-    // .replace(/{/g, '{"{"{')
-    // .replace(/}/g, '{"}"}')
-    // .replace(/{"{"{/g, '{"{"}')
-    .replace(/\t/g, '');
-
-  if (lang !== 'render') {
-    return codeBlockTemplate(js, codeBlock, langClass);
-  }
-  return `<div>${js}</div>`;
-}
-
-/**
- * @typedef MarkdownObject
- * @type {Object}
- * @property {Object} attributes - Map of properties from the front matter
- * @property {String} body       - Markdown
- */
-
-/**
- * @typedef HTMLObject
- * @type {Object}
- * @property {String} html    - HTML parsed from markdown
- * @property {Object} imports - Map of dependencies
- */
-
-/**
- * Parse Markdown to HTML with code blocks
+ * Parse Markdown to HTML
  * @param   {MarkdownObject} markdown - Markdown attributes and body
  * @returns {HTMLObject}                HTML and imports
  */
-function parseMarkdown(markdown) {
-  return new Promise((resolve, reject) => {
-    let html;
-
-    const options = {
-      highlight(code, lang) {
-        const language = Prism.languages[lang] || Prism.languages.autoit;
-        return Prism.highlight(code, language);
-      },
-      xhtmlOut: true
-    };
-
-    md.set(options);
-
-    md.renderer.rules.fence_custom.render = (tokens, idx, opts) => {
-      // gets tags applied to fence blocks ```react html
-      const codeTags = tokens[idx].params.split(/\s+/g);
-      return parseCodeBlock(
-        tokens[idx].content,
-        codeTags[codeTags.length - 1],
-        opts.langPrefix,
-        opts.highlight
-      );
-    };
+function parseMarkdown(markdown, preset = {}) {
+  return new Promise(async (resolve, reject) => {
+    let convertedHtml;
+    const settings = preset.settings ? preset.settings : {};
 
     try {
-      html = md.render(markdown.body);
-      return resolve({ html, attributes: markdown.attributes });
+      const parser = unified()
+        .use(remarkParse, settings)
+        .use(remark2rehype, { allowDangerousHtml: true })
+        .use(raw)
+        .use(rehypePrism)
+        .use(preset)
+        .use(htmlRehype);
+
+      convertedHtml = String(await parser.process(markdown.body));
+
+      return resolve({ html: convertedHtml, attributes: markdown.attributes });
     } catch (err) {
+      // eslint-disable-next-line no-console
+      console.log(report(err));
       return reject(err);
     }
   });
@@ -121,14 +56,12 @@ function parseFrontMatter(markdown) {
  * @param  {String} markdown - Markdown string to be parsed
  * @returns {HTMLObject}       HTML and imports
  */
-function parse(markdown) {
-  return parseMarkdown(parseFrontMatter(markdown));
+function parse(markdown, preset) {
+  return parseMarkdown(parseFrontMatter(markdown), preset);
 }
 
 module.exports = {
-  codeBlockTemplate,
   parse,
-  parseCodeBlock,
   parseFrontMatter,
   parseMarkdown
 };

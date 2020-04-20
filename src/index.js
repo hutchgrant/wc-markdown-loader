@@ -22,7 +22,7 @@ module.exports = async function loader(content) {
   let elementLabel = '';
 
   validateOptions(schema, options, 'wc-markdown-loader');
-  const { graph, shadowRoot, defaultStyle, customStyle } = options;
+  const { graph, shadowRoot, preset, defaultStyle, customStyle } = options;
 
   if (Object.keys(options).length > 0 && graph) {
     // use preset graph
@@ -43,11 +43,12 @@ module.exports = async function loader(content) {
   const defaults = {
     label: elementLabel,
     defaultDOM: shadowRoot,
-    defaultStyle: defaultStyle || defaultStyle === undefined,
+    preset,
+    defaultStyle,
     customStyle
   };
 
-  parser.parse(content)
+  parser.parse(content, preset)
     .then(markdown => build(markdown, defaults))
     .then(component => callback(null, component))
     .catch(callback);

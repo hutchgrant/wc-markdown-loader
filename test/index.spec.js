@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const loader = require('../src/index.js');
 
-describe('React Markdown Loader', () => {
+describe('Web Component Markdown Loader', () => {
   let mdExample = '';
   const mdFile = path.join(__dirname, '../demo/src/hello-world.md');
 

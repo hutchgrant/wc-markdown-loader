@@ -7,19 +7,16 @@ Web Component Markdown Loader
 [![devDependencies Status](https://david-dm.org/hutchgrant/wc-markdown-loader/dev-status.svg)](https://david-dm.org/hutchgrant/wc-markdown-loader?type=dev)
 
 Webpack loader that parses markdown files and converts them to Web Components.
-It will also parse FrontMatter to import dependencies and render components
-along with it’s source code.
+It will also parse FrontMatter to import dependencies and render components.
+Provides support for syntax highlighting via [prismjs](https://prismjs.com/)
 
-This loader is a modified fork from [javiercf/react-markdown-loader](https://github.com/javiercf/react-markdown-loader) and can easily be used in conjunction with [Create-Evergreen-App](https://github.com/ProjectEvergreen/create-evergreen-app). It's still in the early stages and contributions are welcome.
+This loader is a modified fork from [javiercf/react-markdown-loader](https://github.com/javiercf/react-markdown-loader) and can easily be used in conjunction with [Create-Evergreen-App](https://github.com/ProjectEvergreen/create-evergreen-app) and [Greenwood](https://github.com/ProjectEvergreen/greenwood). It's still in the early stages and contributions are welcome.
 
 ## Install
 
 ```bash
 npm i --save-dev wc-markdown-loader
-npm i prismjs
 ```
-
-Prism is required within your application for syntax highlighting. By default, we're using the twilight theme. You can override that as well.
 
 ## Usage
 
@@ -65,8 +62,6 @@ class HelloWorld extends LitElement {
 customElements.define('hello-world', HelloWorld);
 
 ```
-In the markdown File add the *render* tag to code fenceblocks you want the
-loader to compile as Components this will output the rendered component.
 
 *hello-world.md*
 
@@ -81,15 +76,11 @@ imports:
 
 This is an example component rendered from markdown
 
-```render
 &lt;hello-world label="world"&gt;&lt;/hello-world&gt;
-```
 
 This is an example code block rendered with syntax highlighter
 
-```render html
-&lt;!-- This will only render in prism syntax highlighter -->
-&lt;!-- You can override this style, see ./demo/hello-world.md --&gt;
+```html
 &lt;hello-world label="world"&gt;&lt;/hello-world&gt;
 ```
 
@@ -119,7 +110,7 @@ customElements.define('eve-app', AppComponent);
 
 ### LightDOM
 
-If you want to disable shadowRoot and instead heave your markdown component render in the root node, you can add the following to your webpack config.
+If you want to disable shadowRoot and instead have your markdown component render in the root node, you can add the following to your webpack config.
 
 *webpack.config.js*
 ```js
@@ -140,7 +131,7 @@ This is if you need to manipulate this component from a parent component etc.
 
 ### Custom Style
 
-If you want to set a global custom style to use for your markdown components, you can do so from your webpack config. Keep in mind that this is relative to the working directory. You may need to use a `path.join(__dirname, 'mypath/mypath.css')`.  The example below demonstrates a prism theme from `node_modules/prismjs/themes/`.
+If you want to set a global custom style to use for your markdown components, you can do so from your webpack config. Keep in mind that this is relative to the working directory. You may need to use a `path.join(__dirname, 'mypath/mypath.css')`.  The example below demonstrates a prismjs theme from `node_modules/prismjs/themes/prism-tomorrow.css`.
 
 *webpack.config.js*
 ```js
@@ -151,7 +142,7 @@ module: {
       loader: 'wc-markdown-loader',
       options: {
         defaultStyle: false,
-        customStyle: 'prismjs/themes/prism-funky.css'
+        customStyle: 'prismjs/themes/prism-tomorrow.css'
       }
     }
   ]
@@ -159,6 +150,32 @@ module: {
 ```
 
 **note**: You can toggle the defaultStyle as well, it will have a lower specificity than the customStyle.
+
+### Unified Presets
+
+You can utilize [unified presets](https://github.com/unifiedjs/unified#preset) via the **preset** option within the loader.  The presets are placed in the unified process array after remark is converted to rehype.
+
+*webpack.config.js*
+```js
+module: {
+  rules: [
+    {
+      test: /\.md$/,
+      loader: 'wc-markdown-loader',
+      options: {
+        preset: {
+          settings: {bullet: '*', emphasis: '*', fences: true},
+            plugins: [
+              require('rehype-slug'),
+              require('rehype-autolink-headings')
+            ]
+          ]
+        }
+      }
+    }
+  ]
+}
+```
 
 ### Graph
 
