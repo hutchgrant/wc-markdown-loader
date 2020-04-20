@@ -40,7 +40,7 @@ describe('Parse Markdown', () => {
 
   it('parses markdown and created valid html for JSX', () => {
     parser.parse('![](myImage.png)').then((result) => {
-      expect(result.html).toEqual('<p><img src=\"myImage.png\"></p>\n');
+      expect(result.html).toEqual('<p><img src="myImage.png"></p>\n');
     });
   });
 

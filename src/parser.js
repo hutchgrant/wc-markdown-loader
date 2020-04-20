@@ -28,6 +28,7 @@ function parseMarkdown(markdown, preset = {}) {
 
       return resolve({ html: convertedHtml, attributes: markdown.attributes });
     } catch (err) {
+      // eslint-disable-next-line no-console
       console.log(report(err));
       return reject(err);
     }
