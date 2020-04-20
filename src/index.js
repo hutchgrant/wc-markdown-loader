@@ -28,7 +28,7 @@ module.exports = async function loader(content) {
     // use preset graph
     const presetGraph = JSON.parse(fs.readFileSync(graph, 'utf8'));
 
-    elementLabel = presetGraph.filter(page => page.filePath === this.resourcePath)[0].label;
+    elementLabel = presetGraph.filter((page) => page.filePath === this.resourcePath)[0].label;
   } else {
     // auto hash label
     const hash = crypto.createHash(labelHash.algo);
@@ -49,7 +49,7 @@ module.exports = async function loader(content) {
   };
 
   parser.parse(content, preset)
-    .then(markdown => build(markdown, defaults))
-    .then(component => callback(null, component))
+    .then((markdown) => build(markdown, defaults))
+    .then((component) => callback(null, component))
     .catch(callback);
 };

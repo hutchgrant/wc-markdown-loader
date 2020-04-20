@@ -1,3 +1,4 @@
+/* eslint-disable no-async-promise-executor */
 'use strict';
 
 const frontMatter = require('front-matter');
@@ -20,20 +21,23 @@ function parseMarkdown(markdown, preset = {}) {
     const settings = preset.settings ? preset.settings : {};
 
     try {
-      const parser = unified()
+      unified()
         .use(remarkParse, settings)
         .use(remark2rehype, { allowDangerousHtml: true })
         .use(raw)
         .use(rehypePrism)
         .use(preset)
-        .use(htmlRehype);
-
-      convertedHtml = String(await parser.process(markdown.body));
+        .use(htmlRehype)
+        .process(markdown.body, (err, file) => {
+          if (err) {
+            // eslint-disable-next-line no-console
+            console.log(report(err));
+          }
+          convertedHtml = String(file);
+        });
 
       return resolve({ html: convertedHtml, attributes: markdown.attributes });
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.log(report(err));
       return reject(err);
     }
   });
