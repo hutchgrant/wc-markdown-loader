@@ -29,16 +29,7 @@ describe('Parse Markdown', () => {
     const result = parser.parseFrontMatter(mdExample);
     expect(result.attributes).toHaveProperty('imports');
     expect(result.attributes.imports).toBeInstanceOf(Object);
-    expect(result.attributes.imports).toEqual({ Button: './button.js', HelloWorld: './hello-world.js', CSS: 'prismjs/themes/prism-dark.css' });
-  });
-
-  it('example code blocks have run and source code', () => {
-    const exampleCode = 'example';
-    const result = parser.codeBlockTemplate(exampleCode, exampleCode);
-
-    expect(result).toEqual(`
-    <pre>
-<code>example</code></pre>`);
+    expect(result.attributes.imports).toEqual({ Button: './button.js', HelloWorld: './hello-world.js' });
   });
 
   it('parses markdown with live code blocks', () => {
@@ -49,7 +40,7 @@ describe('Parse Markdown', () => {
 
   it('parses markdown and created valid html for JSX', () => {
     parser.parse('![](myImage.png)').then((result) => {
-      expect(result.html).toMatch(/<p><img src="myImage.png" alt="" \/><\/p>\n/);
+      expect(result.html).toEqual('<p><img src=\"myImage.png\"></p>\n');
     });
   });
 
@@ -57,5 +48,27 @@ describe('Parse Markdown', () => {
     parser.parse(mdExample).then((result) => {
       expect(result.attributes).toHaveProperty('label', 'hello');
     });
+  });
+});
+
+describe('Syntax Highlighting', () => {
+  let codeExample = '';
+  const mdFile = path.join(__dirname, '../demo/src/code_example.md');
+
+  beforeAll((done) => {
+    fs.readFile(mdFile, 'utf8', (err, data) => {
+      if (err) {
+        return done(err);
+      }
+
+      codeExample = data;
+      done();
+    });
+  });
+
+  it('example code blocks have run and source code', async () => {
+    const result = await parser.parse(codeExample);
+
+    expect(result.html).toMatch('<pre><code class="hljs language-js">example</code></pre>');
   });
 });
