@@ -33,7 +33,7 @@ module.exports = function build(markdown, defaults) {
   }
 
   if (defaultStyle) {
-    doImports += 'import css from \'prismjs/themes/prism-twilight.css\';\n';
+    doImports += 'import css from \'wc-markdown-loader/node_modules/highlight.js/styles/github.css\';\n';
   }
 
   const style = `
@@ -60,6 +60,7 @@ export const attributes = ${JSON.stringify(camelize(frontMatterAttributes))};
 class Component extends LitElement {
   render(){
     return html \`
+
       ${style}
       <div>
         ${js}
