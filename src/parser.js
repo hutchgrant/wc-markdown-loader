@@ -1,4 +1,5 @@
 /* eslint-disable no-async-promise-executor */
+
 'use strict';
 
 const frontMatter = require('front-matter');
