@@ -20,7 +20,7 @@
     "cssnano": "^4.1.0",
     "eslint": "^6.8.0",
     "eslint-loader": "^4.0.0",
-    "html-webpack-plugin": "^3.2.0",
+    "html-webpack-plugin": "^5.5.0",
     "postcss-cssnext": "^3.1.0",
     "postcss-loader": "^3.0.0",
     "react-markdown-loader": "^1.1.14",
